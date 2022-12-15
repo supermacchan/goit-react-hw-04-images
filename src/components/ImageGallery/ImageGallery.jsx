@@ -29,9 +29,7 @@ export const ImageGallery = ({ data }) => {
                     } else if (images.hits.length > 0 && images.totalHits > 12) {
                         setImages(images.hits);
                         setShowButton(true);
-                        setPageNumber(prevState => {
-                            return prevState + 1;
-                        });
+                        setPageNumber(prevState => prevState + 1);
                         return;
                     }
                     toast.error('Oops! No matches found.');
@@ -62,9 +60,7 @@ export const ImageGallery = ({ data }) => {
                     setImages(prevState => {
                         return [...prevState, ...images.hits];
                     });
-                    setPageNumber(prevState => {
-                        return prevState + 1;
-                    });
+                    setPageNumber(prevState => prevState + 1);
                 }
                 
                 if (images.hits.length < 12) {
