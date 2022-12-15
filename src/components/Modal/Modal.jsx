@@ -5,17 +5,18 @@ import css from './Modal.module.css';
 
 export const Modal = ({ largeImage, alt, onClose }) => {
     useEffect(() => {
+        const handleKeydown = event => {
+            if (event.code === 'Escape') {
+                onClose();
+            };
+        };
+
         window.addEventListener('keydown', handleKeydown);
+
         return () => {
             window.removeEventListener('keydown', handleKeydown);
         }
-    }, []);
-
-    const handleKeydown = event => {
-        if (event.code === 'Escape') {
-            onClose();
-        };
-    };
+    }, [onClose]);
 
     const handleOverlayClick = event => {
         if (event.currentTarget === event.target) {
