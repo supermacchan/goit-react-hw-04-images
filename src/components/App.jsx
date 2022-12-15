@@ -6,7 +6,7 @@ import { ToastContainer } from 'react-toastify';
 
 export const App = () => {
   const [value, setValue] = useState('');
-
+  
     return (
       <>
         <Searchbar onSubmit={setValue} />
