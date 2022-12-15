@@ -30,7 +30,6 @@ export class ImageGallery extends Component {
                 showButton: false,
                 pageNumber: 1,
             });
-            console.log(this.state.pageNumber);
             this.fetchGallery();
         } 
     };
