@@ -1,41 +1,32 @@
 import PropTypes from 'prop-types';
-import { Component } from 'react';
+import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import css from './Modal.module.css';
 
-export class Modal extends Component {
-    static propTypes = {
-        largeImage: PropTypes.string.isRequired,
-        alt: PropTypes.string.isRequired,
-        onClose: PropTypes.func.isRequired,
-    };
+export const Modal = ({ largeImage, alt, onClose }) => {
+    useEffect(() => {
+        window.addEventListener('keydown', handleKeydown);
+        return () => {
+            window.removeEventListener('keydown', handleKeydown);
+        }
+    }, []);
 
-    componentDidMount() {
-        window.addEventListener('keydown', this.handleKeydown);
-    };
-
-    componentWillUnmount() {
-        window.removeEventListener('keydown', this.handleKeydown);
-    };
-
-    handleKeydown = event => {
+    const handleKeydown = event => {
         if (event.code === 'Escape') {
-            this.props.onClose();
+            onClose();
         };
     };
 
-    handleOverlayClick = event => {
+    const handleOverlayClick = event => {
         if (event.currentTarget === event.target) {
-            this.props.onClose();
+            onClose();
         }
     };
 
-    render() {
-        const { largeImage, alt } = this.props;
-        const modalRoot = document.querySelector('#modal-root');
-        
+    const modalRoot = document.querySelector('#modal-root');
+    
         return createPortal(
-            <div className={css.overlay} onClick={this.handleOverlayClick}>
+            <div className={css.overlay} onClick={handleOverlayClick}>
                 <div className={css.modal}>
                     <img src={largeImage} alt={alt} />
                 </div>
@@ -43,4 +34,9 @@ export class Modal extends Component {
             modalRoot,
         );
     };
-}
+
+Modal.propTypes = {
+    largeImage: PropTypes.string.isRequired,
+    alt: PropTypes.string.isRequired,
+    onClose: PropTypes.func.isRequired,
+};
